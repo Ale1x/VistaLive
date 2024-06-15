@@ -51,6 +51,12 @@ jobs:
           sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=sqlite/' .env
           sed -i 's/^DB_DATABASE=laravel/DB_DATABASE=database\/database.sqlite/' .env
 
+      - name: Install Google Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Install Chromedriver
+        run: php artisan dusk:chrome-driver
+
       - name: Run the migrations
         run: php artisan migrate --force
 
@@ -61,4 +67,4 @@ jobs:
         run: composer require pestphp/pest --dev --with-all-dependencies
 
       - name: Run Tests
-        run: ./vendor/bin/pest ./vendor/devdojo/auth/tests
+        run: php artisan dusk --no-tty
