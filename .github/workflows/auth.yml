@@ -62,4 +62,4 @@ jobs:
       run: composer require pestphp/pest --dev --with-all-dependencies
 
     - name: Run Tests
-      run: ./vendor/bin/pest
+      run: ./vendor/bin/pest ./vendor/devdojo/auth/tests
