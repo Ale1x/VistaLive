@@ -7,63 +7,23 @@ use Illuminate\Http\Request;
 
 class WebcamController extends Controller
 {
-    public function index(): \Illuminate\Http\JsonResponse
+    /**
+     * Mostra l'elenco delle webcams.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        return response()->json(Webcam::all());
+        $webcams = Webcam::all();
+        return view('webcams.index', compact('webcams'));
     }
 
-    public function show($id): \Illuminate\Http\JsonResponse
+    public function show($id)
     {
-        $webcam = Webcam::find($id);
-        if (!$webcam) {
-            return response()->json(['error' => 'Webcam not found'], 404);
-        }
-        return response()->json($webcam);
-    }
+        $webcam = Webcam::findOrFail($id);
+        $popularWebcams = Webcam::orderBy('views', 'desc')->take(5)->get(); // Assumendo che ci sia una colonna 'views' nel modello Webcam
 
-    public function store(Request $request): \Illuminate\Http\JsonResponse
-    {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'stream_url' => 'required',
-            'image_url' => 'required',
-        ]);
-
-        $webcam = Webcam::create($validatedData);
-
-        return response()->json($webcam, 201);
-    }
-
-    public function update(Request $request, $id): \Illuminate\Http\JsonResponse
-    {
-        $webcam = Webcam::find($id);
-        if (!$webcam) {
-            return response()->json(['error' => 'Webcam not found'], 404);
-        }
-
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'stream_url' => 'required',
-            'image_url' => 'required',
-        ]);
-
-        $webcam->update($validatedData);
-
-        return response()->json($webcam, 200);
-    }
-
-    public function destroy($id): \Illuminate\Http\JsonResponse
-    {
-        $webcam = Webcam::find($id);
-        if (!$webcam) {
-            return response()->json(['error' => 'Webcam not found'], 404);
-        }
-
-        $webcam->delete();
-
-        return response()->json(null, 204);
+        return view('webcams.show', compact('webcam', 'popularWebcams'));
     }
 
 }

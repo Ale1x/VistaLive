@@ -4,29 +4,15 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MapController;
-use App\Http\Controllers\WebcamController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WebcamViewController;
+use App\Http\Controllers\WebcamController;
 
-
-Route::group(['prefix' => 'api'], function () {
-    Route::prefix('webcams')->group(function () {
-        Route::get('/', [WebcamController::class, 'index']);
-        Route::get('/{id}', [WebcamController::class, 'show']);
-        Route::post('/', [WebcamController::class, 'store']);
-        Route::put('/{id}', [WebcamController::class, 'update']);
-        Route::delete('/{id}', [WebcamController::class, 'destroy']);
-    });
-});
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/webcams', [WebcamViewController::class, 'index'])->name('webcams.index');
-Route::get('/webcam/{id}', [WebcamViewController::class, 'show'])->name('webcams.show');
+Route::get('/webcams', [WebcamController::class, 'index'])->name('webcams.index');
+Route::get('/webcam/{id}', [WebcamController::class, 'show'])->name('webcams.show');
 Route::get('/map', [MapController::class, 'index'])->name('map.index');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
-
-
-
 
 Route::middleware(['auth', 'can:admin-access'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
