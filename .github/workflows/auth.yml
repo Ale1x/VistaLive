@@ -2,9 +2,9 @@ name: Authentication Tests
 
 on:
     push:
-        branches: [main]
+        branches: [master]
     pull_request:
-        branches: [main]
+        branches: [master]
 
 jobs:
   test:
@@ -50,7 +50,7 @@ jobs:
       run: php artisan migrate
 
     - name: Run the Auth Migrations
-      run: php artisan migrate --path=vendor/devdojo/auth/database/migrations 
+      run: php artisan migrate --path=vendor/devdojo/auth/database/migrations
 
     - name: Install PestPHP
       run: composer require pestphp/pest --dev --with-all-dependencies
