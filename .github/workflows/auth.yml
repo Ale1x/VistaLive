@@ -67,4 +67,4 @@ jobs:
         run: composer require pestphp/pest --dev --with-all-dependencies
 
       - name: Run Tests
-        run: php artisan dusk --no-tty
+        run: ./vendor/bin/pest ./vendor/devdojo/auth/tests
