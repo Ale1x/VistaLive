@@ -21,6 +21,7 @@ class User extends AuthUser
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -44,5 +45,10 @@ class User extends AuthUser
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
     }
 }

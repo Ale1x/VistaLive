@@ -29,7 +29,7 @@ return [
         'container' => 'center',
     ],
     'favicon' => [
-        'light' => '/auth/img/favicon.png',
-        'dark' => '/auth/img/favicon-dark.png',
+        'light' => '/storage/auth/favicon.png',
+        'dark' => '/storage/auth/favicon-dark.png',
     ],
 ];
