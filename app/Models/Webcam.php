@@ -14,7 +14,6 @@ class Webcam extends Model
         'description',
         'stream_url',
         'image_url',
+        'in_regione',
     ];
-
-
 }

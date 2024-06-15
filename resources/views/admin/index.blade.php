@@ -10,22 +10,22 @@
                 <p class="text-lg text-gray-600 mb-8">
                     Qui puoi gestire tutte le webcam presenti sul sito. Aggiungi nuove webcam, modifica quelle esistenti o rimuovile se non sono più attive.
                 </p>
-                <a href="{{ route('admin.create') }}" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors duration-300 mb-8 inline-block">
+                <a href="{{ route('admin.webcams.create') }}" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors duration-300 mb-8 inline-block">
                     Aggiungi Webcam
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @foreach ($webcams as $webcam)
-                    <div class="bg-white shadow-md rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-4">
+                    <div class="bg-white shadow-md rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-2">
                             <span class="text-red-500">LIVE</span>
                         </div>
-                        <h2 class="text-2xl font-bold mb-4">{{ $webcam->name }}</h2>
-                        <img src="{{ $webcam->image_url }}" alt="{{ $webcam->name }}" class="mb-4 w-full h-48 object-cover rounded">
+                        <h2 class="text-xl font-bold mb-2">{{ $webcam->name }}</h2>
+                        <img src="{{ $webcam->image_url }}" alt="{{ $webcam->name }}" class="mb-2 w-full h-48 object-cover rounded">
                         <div class="flex space-x-2">
-                            <a href="{{ route('admin.edit', $webcam->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded">Edit</a>
-                            <form action="{{ route('admin.destroy', $webcam->id) }}" method="POST">
+                            <a href="{{ route('admin.webcams.edit', $webcam->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded">Edit</a>
+                            <form action="{{ route('admin.webcams.destroy', $webcam->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Delete</button>

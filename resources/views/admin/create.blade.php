@@ -6,7 +6,7 @@
             <h2 class="text-3xl font-bold uppercase tracking-wider mb-8 text-center">
                 Aggiungi Webcam
             </h2>
-            <form action="{{ route('admin.store') }}" method="POST" class="space-y-4">
+            <form action="{{ route('admin.webcams.store') }}" method="POST" class="space-y-4">
                 @csrf
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700">Nome</label>
@@ -23,6 +23,10 @@
                 <div>
                     <label for="image_url" class="block text-sm font-medium text-gray-700">Image URL</label>
                     <input type="text" name="image_url" id="image_url" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                </div>
+                <div>
+                    <label for="in_regione" class="block text-sm font-medium text-gray-700">In Regione</label>
+                    <input type="checkbox" name="in_regione" id="in_regione" class="mt-1">
                 </div>
                 <div>
                     <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors duration-300">Aggiungi</button>

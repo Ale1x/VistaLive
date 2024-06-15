@@ -17,6 +17,7 @@
                 <div class="bg-white p-6 rounded-lg shadow-lg w-full lg:w-2/3 text-center lg:text-left">
                     <h1 class="text-3xl font-bold">{{ $webcam->name }}</h1>
                     <p class="mt-4 text-gray-600">{{ $webcam->description }}</p>
+                    <p class="mt-2 text-gray-600"><i class="fas fa-eye"></i> Visualizzazioni: {{ $webcam->views }}</p>
 
                     <div class="flex justify-center lg:justify-start space-x-4 mt-4">
                         <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(Request::fullUrl()) }}" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 flex items-center">
@@ -47,13 +48,15 @@
             <div class="w-full text-center mt-8">
                 <h2 class="text-3xl font-bold uppercase tracking-wider">Webcam Più Viste</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-                    @foreach ($popularWebcams->where('id', '!=', $webcam->id)->take(3) as $popularWebcam)
-                        <div class="bg-white shadow-md rounded-lg p-4">
-                            <h2 class="text-xl font-bold mb-2">{{ $popularWebcam->name }}</h2>
-                            <a href="{{ route('webcams.show', $popularWebcam->id) }}">
-                                <img src="{{ $popularWebcam->image_url }}" alt="{{ $popularWebcam->name }}" class="mb-2 w-full h-32 object-cover rounded">
-                            </a>
-                        </div>
+                    @foreach ($popularWebcams as $popularWebcam)
+                        @if ($popularWebcam->id !== $webcam->id)
+                            <div class="bg-white shadow-md rounded-lg p-4">
+                                <h2 class="text-xl font-bold mb-2">{{ $popularWebcam->name }}</h2>
+                                <a href="{{ route('webcams.show', $popularWebcam->id) }}">
+                                    <img src="{{ $popularWebcam->image_url }}" alt="{{ $popularWebcam->name }}" class="mb-2 w-full h-32 object-cover rounded">
+                                </a>
+                            </div>
+                        @endif
                     @endforeach
                 </div>
             </div>

@@ -21,9 +21,22 @@ class WebcamController extends Controller
     public function show($id)
     {
         $webcam = Webcam::findOrFail($id);
+        $webcam->increment('views'); // Incrementa il conteggio delle visualizzazioni
+
         $popularWebcams = Webcam::orderBy('views', 'desc')->take(5)->get(); // Assumendo che ci sia una colonna 'views' nel modello Webcam
 
         return view('webcams.show', compact('webcam', 'popularWebcams'));
     }
 
+    public function inRegione()
+    {
+        $webcams = Webcam::where('in_regione', true)->get();
+        return view('webcams.inRegione', compact('webcams'));
+    }
+
+    public function fuoriRegione()
+    {
+        $webcams = Webcam::where('in_regione', false)->get();
+        return view('webcams.fuoriRegione', compact('webcams'));
+    }
 }

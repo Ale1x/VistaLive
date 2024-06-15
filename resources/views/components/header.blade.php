@@ -25,10 +25,10 @@
                             <a href="{{ url('/webcams') }}" class="block px-4 py-2 hover:bg-gray-100 transition-colors duration-300 rounded-t-lg">Tutte le Webcams</a>
                         </li>
                         <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 transition-colors duration-300">In Regione</a>
+                            <a href="{{ url('/webcams/inRegione') }}" class="block px-4 py-2 hover:bg-gray-100 transition-colors duration-300">In Regione</a>
                         </li>
                         <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 transition-colors duration-300 rounded-b-lg">Fuori Regione</a>
+                            <a href="{{ url('/webcams/fuoriRegione') }}" class="block px-4 py-2 hover:bg-gray-100 transition-colors duration-300 rounded-b-lg">Fuori Regione</a>
                         </li>
                     </ul>
                 </li>
@@ -38,9 +38,30 @@
                 <li>
                     <a href="{{ url('/contact') }}" class="hover:text-gray-400 transition-colors duration-300">Contattaci</a>
                 </li>
-                <li>
-                    <a href="{{ url('/admin') }}" class="hover:text-gray-400 transition-colors duration-300">Admin</a>
-                </li>
+                @can('admin-access')
+                    <li class="relative group">
+                        <a href="#" id="adminMenuButton" class="hover:text-gray-400 transition-colors duration-300 flex items-center">
+                            Admin <i class="fas fa-caret-down ml-2"></i>
+                        </a>
+                        <ul id="adminDropdown" class="absolute hidden group-hover:block bg-white text-black py-2 mt-1 rounded-lg shadow-lg min-w-[160px]">
+                            <li>
+                                <a href="{{ url('/admin') }}" class="block px-4 py-2 hover:bg-gray-100 transition-colors duration-300">Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/admin/seo-settings') }}" class="block px-4 py-2 hover:bg-gray-100 transition-colors duration-300">Impostazioni SEO</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/admin/statistics') }}" class="block px-4 py-2 hover:bg-gray-100 transition-colors duration-300">Statistiche</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/admin/logs') }}" class="block px-4 py-2 hover:bg-gray-100 transition-colors duration-300">Logs</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/admin/backups') }}" class="block px-4 py-2 hover:bg-gray-100 transition-colors duration-300 rounded-b-lg">Backup</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endcan
             </ul>
         </nav>
     </div>
@@ -50,6 +71,8 @@
     document.addEventListener('DOMContentLoaded', function () {
         const webcamsMenuButton = document.getElementById('webcamsMenuButton');
         const webcamsDropdown = document.getElementById('webcamsDropdown');
+        const adminMenuButton = document.getElementById('adminMenuButton');
+        const adminDropdown = document.getElementById('adminDropdown');
 
         webcamsMenuButton.addEventListener('mouseenter', function () {
             webcamsDropdown.classList.remove('hidden');
@@ -69,6 +92,26 @@
 
         webcamsDropdown.addEventListener('mouseenter', function () {
             webcamsDropdown.classList.remove('hidden');
+        });
+
+        adminMenuButton.addEventListener('mouseenter', function () {
+            adminDropdown.classList.remove('hidden');
+        });
+
+        adminMenuButton.addEventListener('mouseleave', function () {
+            setTimeout(function () {
+                if (!adminDropdown.matches(':hover')) {
+                    adminDropdown.classList.add('hidden');
+                }
+            }, 100);
+        });
+
+        adminDropdown.addEventListener('mouseleave', function () {
+            adminDropdown.classList.add('hidden');
+        });
+
+        adminDropdown.addEventListener('mouseenter', function () {
+            adminDropdown.classList.remove('hidden');
         });
     });
 </script>
