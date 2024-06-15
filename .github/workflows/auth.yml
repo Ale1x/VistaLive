@@ -41,6 +41,9 @@ jobs:
     - name: List out .env
       run: cat .env.example
 
+    - name: Copy .env.example to .env
+      run: cp .env.example .env
+
     - name: Updating values in the .env
       run: |
         sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=sqlite/' .env
